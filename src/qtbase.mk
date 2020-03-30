@@ -9,7 +9,7 @@ $(PKG)_CHECKSUM := 20fbc7efa54ff7db9552a7a2cdf9047b80253c1933c834f35b0bc5c1ae021
 $(PKG)_SUBDIR   := $(PKG)-everywhere-src-$($(PKG)_VERSION)
 $(PKG)_FILE     := $(PKG)-everywhere-src-$($(PKG)_VERSION).tar.xz
 $(PKG)_URL      := https://download.qt.io/official_releases/qt/5.12/$($(PKG)_VERSION)/submodules/$($(PKG)_FILE)
-$(PKG)_DEPS     := cc zlib libpng libressl
+$(PKG)_DEPS     := cc zlib libressl
 $(PKG)_DEPS_$(BUILD) :=
 $(PKG)_TARGETS  := $(BUILD) $(MXE_TARGETS)
 
@@ -39,8 +39,8 @@ define $(PKG)_BUILD
             -no-use-gold-linker \
             -release \
             -shared \
-            -sse2 -sse3 -ssse3 -sse4.1 -no-sse4.2 -no-avx -no-avx2 -no-avx512 \
-            -qtnamespace Fx -qtlibinfix Fx \
+            -sse2 -no-sse3 -no-ssse3 -no-sse4.1 -no-sse4.2 -no-avx -no-avx2 -no-avx512 \
+            -qtnamespace FF -qtlibinfix FF \
             -prefix '$(PREFIX)/$(TARGET)/qt5' \
             -no-icu \
             -opengl desktop \
@@ -49,12 +49,12 @@ define $(PKG)_BUILD
             -nomake examples \
             -nomake tests \
             -system-zlib \
-            -system-libpng \
-            -no-libjpeg \
-            -no-sqlite \
+            -qt-libpng \
+            -qt-libjpeg \
+            -qt-sqlite \
             -no-fontconfig \
             -qt-freetype \
-            -no-harfbuzz \
+            -qt-harfbuzz \
             -qt-pcre \
             -openssl-linked \
             -no-pch \

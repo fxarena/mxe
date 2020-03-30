@@ -5,12 +5,16 @@ $(PKG)_WEBSITE  := https://www.qt.io/
 $(PKG)_DESCR    := Qt
 $(PKG)_IGNORE   :=
 $(PKG)_VERSION   = $(qtbase_VERSION)
-$(PKG)_CHECKSUM := 919a2713b6d2d7873a09ad85bd93cf4282606e5bf84d5884250f665a253ec06e
+$(PKG)_CHECKSUM := 3b0e353860a9c0cd4db9eeae5f94fef8811ed7d107e3e5e97e4a557f61bd6eb6
 $(PKG)_SUBDIR    = $(subst qtbase,qttools,$(qtbase_SUBDIR))
 $(PKG)_FILE      = $(subst qtbase,qttools,$(qtbase_FILE))
 $(PKG)_URL       = $(subst qtbase,qttools,$(qtbase_URL))
-$(PKG)_DEPS     := cc qtactiveqt qtbase qtdeclarative
+#$(PKG)_DEPS     := cc qtactiveqt qtbase qtdeclarative
+$(PKG)_DEPS     := cc qtbase
+
 $(PKG)_TARGETS  := $(BUILD) $(MXE_TARGETS)
+
+#$(PKG)_TEST_DIR := $(dir $(lastword $(MAKEFILE_LIST)))/qttools-test
 
 define $(PKG)_UPDATE
     echo $(qtbase_VERSION)
@@ -22,7 +26,11 @@ define $(PKG)_BUILD
     $(MAKE) -C '$(1)' -j 1 install
 
     # test QUiLoader
-    $(CMAKE_TEST)
+    #mkdir '$(1)'.test
+    #cd '$(1)'.test && '$(TARGET)-cmake' '$($(PKG)_TEST_DIR)'
+    #$(MAKE) -C '$(1)'.test
+    #cp '$(1)'.test/mxe-cmake-qtuitools.exe \
+    #    '$(PREFIX)/$(TARGET)/bin/test-qttools.exe'
 endef
 
 define $(PKG)_BUILD_$(BUILD)
